@@ -9,7 +9,7 @@ test.beforeEach(async({page}) => {
 
 test('locator syntax rules', async({page})=>{
     //by tag name
-    
+
 page.locator('input')
 //by id
 page.locator('#inputEmail1')
@@ -34,5 +34,21 @@ page.locator(':text("Using")')
 page.locator(':text-is()"Using the Grid')
 
 })
+
+test('User facing locators', async({page})=>{
+
+    await page.getByRole('textbox', {name: "Email"}).first().click()
+    await page.getByRole('button', {name: "Sign in"}).first().click()
+
+    await page.getByLabel('Email').click()
+    await page.getByPlaceholder('Jane Doe').click()
+    await page.getByText('Using the Grid').click()
+    await page.getByTestId('SignIn').click()
+
+
+
+}
+
+)
 
 
