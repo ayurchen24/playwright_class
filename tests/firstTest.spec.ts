@@ -65,4 +65,15 @@ test('parent element', async({page})=>{
 
 })
 
+test('reusing locators',async({page})=>{
+
+const basicForm= page.locator('nb-card').filter({hasText: "Basic form"})
+const emailField= basicForm.getByRole('textbox', {name: "Email"})
+
+await basicForm.locator('nb-checkbox').click()
+await basicForm.getByRole('button').click()
+
+}
+)
+
 
