@@ -1,4 +1,4 @@
- import {test} from '@playwright/test'
+ import {test,expect} from '@playwright/test'
 
 
 test.beforeEach(async({page}) => {
@@ -75,5 +75,21 @@ await basicForm.getByRole('button').click()
 
 }
 )
+test('extracting values', async({page})=>{
+    const basicForm =  page.locator('nb-card').filter({hasText: "Basic form"})
+    const buttonText = await basicForm.locator('button').textContent()
+    expect(buttonText).toEqual('Submit')
+
+    const allRadioButtons = await page.locator('nb-radio').allTextContents()
+    expect(allRadioButtons).toContain("Option 1")
+
+    const emailField = basicForm.getByRole('textbox', {name: "Email"})
+    await emailField.fill('test@test.com')
+    const emailValue = await emailField.inputValue()
+    expect(emailValue).toEqual('test@test.com')
 
 
+    const placeholderValue =  await emailField.getAttribute('placeholder')
+    expect(placeholderValue).toEqual('Email')
+})
+ 
